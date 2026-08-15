@@ -21,24 +21,20 @@
     status = "okay";
 };
 
+// Esta mitad NO lleva trackpad: del bus I2C solo cuelga el OLED (0x3c).
+//
+// Aqui habia un nodo cirque,pinnacle en 0x2a apuntando a un dispositivo
+// inexistente, con su pin de data-ready flotando sin resistencia. Las
+// interrupciones espurias de ese pin disparaban lecturas I2C continuas a
+// un chip que nunca responde, saturando el bus y dejando la pantalla
+// encendida pero sin poder escribirse (ruido de encendido en el panel).
 &pro_micro_i2c {
     status = "okay";
-
-    glidepoint_left: glidepoint_left@2a {
-        compatible = "cirque,pinnacle";
-        reg = <0x2a>;
-        status = "okay";
-        dr-gpios = <&pro_micro 1 (GPIO_ACTIVE_HIGH)>;
-        sensitivity = "2x";
-        sleep;
-        //no-taps;
-        y-invert;
-        //x-invert;
-        //scroll;
-    };
 };
 
+// Sin trackpad local no hay nada que reenviar a la central. El nodo debe
+// quedar deshabilitado, no vacio: en un periferico zmk,input-split lleva un
+// BUILD_ASSERT que exige la propiedad `device`.
 &glidepoint_split {
-    device = <&glidepoint_left>;
-    //input-processors = <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 10>;
+    status = "disabled";
 };
