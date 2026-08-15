@@ -54,8 +54,6 @@
     input-processors = <&zip_xy_scaler 2 1>;
 };
 
-// La mitad izquierda no tiene trackpad, asi que por el split no llega
-// ningun evento de puntero. Este listener sobraba.
 &glidepoint_split_listener {
-    status = "disabled";
+    status = "okay";
 };
