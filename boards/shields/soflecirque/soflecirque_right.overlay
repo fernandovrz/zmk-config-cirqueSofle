@@ -34,9 +34,11 @@
         reg = <0x2a>;
         status = "okay";
         dr-gpios = <&pro_micro 1 (GPIO_ACTIVE_HIGH)>;
-        // Ganancia del sensor: "1x" | "2x" | "3x" | "4x"
-        // Mas alto = detecta toques mas suaves (NO cambia la velocidad del cursor)
-        sensitivity = "3x";
+        // ATENUACION del ADC, no ganancia: "1x" | "2x" | "3x" | "4x"
+        // Numero MAS BAJO = menos atenuacion = MAS sensible (overlay grueso)
+        // Numero MAS ALTO = mas atenuacion = MENOS sensible (overlay fino)
+        // "3x" dejo el trackpad sin detectar toques. "2x" es el valor que funciona.
+        sensitivity = "2x";
         sleep;
         //no-taps;
         y-invert;
