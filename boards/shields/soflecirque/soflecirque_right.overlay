@@ -5,6 +5,7 @@
  */
 
 #include "soflecirque.dtsi"
+#include <input/processors.dtsi>
 
 &default_transform {
     col-offset = <6>;
@@ -33,7 +34,9 @@
         reg = <0x2a>;
         status = "okay";
         dr-gpios = <&pro_micro 1 (GPIO_ACTIVE_HIGH)>;
-        sensitivity = "2x";
+        // Ganancia del sensor: "1x" | "2x" | "3x" | "4x"
+        // Mas alto = detecta toques mas suaves (NO cambia la velocidad del cursor)
+        sensitivity = "3x";
         sleep;
         //no-taps;
         y-invert;
@@ -44,6 +47,9 @@
 &glidepoint_listener {
     status = "okay";
     device = <&glidepoint_right>;
+    // Velocidad del cursor = multiplicador / divisor.
+    // <2 1> = doble de rapido | <3 2> = 1.5x | <1 1> = original | <3 1> = triple
+    input-processors = <&zip_xy_scaler 2 1>;
 };
 
 &glidepoint_split_listener {
