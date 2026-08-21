@@ -19,8 +19,11 @@
 #
 ---
 include:
+  # TEMPORAL: snippet de diagnostico. Anade el nodo zephyr,cdc-acm-uart y
+  # CONFIG_ZMK_USB_LOGGING para poder leer el arranque por puerto serie.
   - board: nice_nano_v2
     shield: soflecirque_left
+    snippet: zmk-usb-logging
   - board: nice_nano_v2
     shield: soflecirque_right
   - board: nice_nano_v2
